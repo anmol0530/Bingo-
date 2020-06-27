@@ -25,13 +25,19 @@ function drawTable() {
         var cellText = document.createTextNode(a.splice(Math.floor(Math.random() * ((r*4) + c - 4)), 1)[0]);
         cell.appendChild(cellText);
         cell.addEventListener("click", function(){
-           event.target.classList.add('scratchCell');
-           numbers_crossed += 1;
-           checkBingo(event.target.getAttribute('id'));
+            var arr = event.target.getAttribute('id').split('_');
+            var row = parseInt(arr[0],10);
+            var col = parseInt(arr[1],10);
+            if(crossed_cells[row].substr(col,1) != '1')
+            {
+                event.target.classList.add('scratchCell');
+                numbers_crossed += 1;
+                checkBingo(row,col);
+            }
+          
         });
         row.appendChild(cell);
       }
-
       tbl.appendChild(row); // add the row to the end of the table body
     }
 
@@ -41,11 +47,8 @@ function drawTable() {
         crossed_cells.push(str);
     }
   }
-  function checkBingo(id)
-      {
-        var arr = id.split('_');
-        var row = parseInt(arr[0],10);
-        var col = parseInt(arr[1],10);
+  function checkBingo(row,col)
+      { 
         var str = crossed_cells[row];
         crossed_cells[row] = str.substr(0,col)+'1'+str.substr(col+1);
         
@@ -61,8 +64,7 @@ function drawTable() {
         }
         if(row == col && (row+col) != 4)
         {
-            for(i=0; i <= 4 ; i++){
-                   
+            for(i=0; i <= 4 ; i++){           
                 if(crossed_cells[i].substr(i,1)==0)
                 {
                     diag_crossed = false;
@@ -93,11 +95,12 @@ function drawTable() {
             if(row_crossed) no_of_lines += 1;
             if(col_crossed) no_of_lines += 1;
             if(diag_crossed) no_of_lines += 1;
-            document.getElementById("bingo").innerHTML = no_of_lines;
-            // if(no_of_lines == 5)
-            // {
-            //     document.getElementById("bingo").innerHTML = 'BINGO';
-            // }
+
+            document.getElementById("no_of_lines").innerHTML = no_of_lines;
+            if(no_of_lines >= 5)
+            {
+                alert("BINGO");
+            }
         }
 }
       
