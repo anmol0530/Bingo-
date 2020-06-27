@@ -1,6 +1,8 @@
 var crossed_cells = [];
 var no_of_lines = 0;
 var numbers_crossed = 0;
+var bingoText = 'BINGO';
+var displayText = '';
 function hello(){
     document.write('HELOOO')
 }
@@ -97,10 +99,8 @@ function drawTable() {
             if(diag_crossed) no_of_lines += 1;
 
             document.getElementById("no_of_lines").innerHTML = no_of_lines;
-            if(no_of_lines >= 5)
-            {
-                alert("BINGO");
-            }
+            displayText = no_of_lines >=5 ? bingoText.substr(0,5):bingoText.substr(0,no_of_lines);
+            document.getElementById("bingo_Text").innerHTML = displayText;
         }
 }
       
