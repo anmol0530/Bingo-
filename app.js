@@ -1,11 +1,32 @@
+/**
+ * |0|0|0|0|0| Array of strings that represent which cell in the grid is checked/scratched and 
+ * |0|0|0|0|0| which is not. 0 = not scratched | 1 = scratched. The array will be initially filled
+ * |0|0|0|0|0| with all 0's as shown aside. Each 0 represents a cell unchecked in the grid.
+ * |0|0|0|0|0| Checking a cell in the original grid will change the corresponding 0 in this 
+ * |0|0|0|0|0| array.  
+  */ 
+
 var crossed_cells = [];
+/**
+ * No of lines made so far.
+ */
 var no_of_lines = 0;
+/**
+ * No of numbers crossed
+ */
 var numbers_crossed = 0;
+/**
+ * Text that will be used to fill the BINGO display text
+ */
 var bingoText = 'BINGO';
+/**
+ * BINGO display text
+ */
 var displayText = '';
-function hello(){
-    document.write('HELOOO')
-}
+
+/**
+ * This function is used to dynamically generate a table grid of 5x5 dimension for BINGO
+ */
 function drawTable() {
     var totalRows = 5;
     var cellsInRow = 5;
@@ -44,11 +65,19 @@ function drawTable() {
     }
 
     div1.appendChild(tbl); // appends <table> into <div1>
+
+    //Initializing the crossed_cells array with 5 strings of '00000'
     var str='00000';
     for(var k = 0; k < 5; k++){
         crossed_cells.push(str);
     }
   }
+
+  /**
+   * Function to increase no_of_lines crossed and check if BINGO is complete.
+   * @param {int} row 
+   * @param {int} col 
+   */
   function checkBingo(row,col)
       { 
         var str = crossed_cells[row];
@@ -56,7 +85,9 @@ function drawTable() {
         
         var row_crossed = crossed_cells[row] == '11111';
         var col_crossed = numbers_crossed >= 5 ;
-        var diag_crossed = numbers_crossed >= 5 && ((row == col) ||((row+col)==4));
+        var left_diag_crossed = numbers_crossed >= 5 && (row == col);
+        var right_diag_crossed = numbers_crossed >= 5 && ((row+col)==4);
+
         for(var i=0; i<= 4; i++){
             if(crossed_cells[i].substr(col,1) == 0)
             {
@@ -64,21 +95,23 @@ function drawTable() {
                 break;
             }
         }
+        
         if(row == col && (row+col) != 4)
         {
             for(i=0; i <= 4 ; i++){           
                 if(crossed_cells[i].substr(i,1)==0)
                 {
-                    diag_crossed = false;
+                    left_diag_crossed = false;
                     break;
                 }
             }                      
         }
+        
         if(row != col && (row+col) == 4)
         {
             for(i=0; i <= 4 ; i++){       
                 if(crossed_cells[i].substr(4-i,1) == 0) {
-                    diag_crossed = false;
+                    right_diag_crossed = false;
                     break;
                 }
             }      
@@ -86,17 +119,22 @@ function drawTable() {
         if((row==col) && ((row+col) == 4))
         {
             for(i=0; i <= 4 ; i++){       
-                if((crossed_cells[i].substr(i,1)==0) || (crossed_cells[i].substr(4-i,1) == 0)){
-                    diag_crossed = false;
+                if((crossed_cells[i].substr(i,1)==0)) {
+                    left_diag_crossed = false;
+                    break;
+                }
+                if((crossed_cells[i].substr(4-i,1) == 0)) {
+                    right_diag_crossed = false;
                     break;
                 }
             }   
         }
-        if(numbers_crossed >= 5 && (row_crossed || col_crossed || diag_crossed))
+        if(numbers_crossed >= 5 && (row_crossed || col_crossed || left_diag_crossed || right_diag_crossed))
         {
             if(row_crossed) no_of_lines += 1;
             if(col_crossed) no_of_lines += 1;
-            if(diag_crossed) no_of_lines += 1;
+            if(left_diag_crossed) no_of_lines += 1;
+            if(right_diag_crossed) no_of_lines += 1;
 
             document.getElementById("no_of_lines").innerHTML = no_of_lines;
             displayText = no_of_lines >=5 ? bingoText.substr(0,5):bingoText.substr(0,no_of_lines);
