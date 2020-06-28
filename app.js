@@ -78,67 +78,77 @@ function drawTable() {
    * @param {int} row 
    * @param {int} col 
    */
-  function checkBingo(row,col)
-      { 
-        var str = crossed_cells[row];
-        crossed_cells[row] = str.substr(0,col)+'1'+str.substr(col+1);
-        
-        var row_crossed = crossed_cells[row] == '11111';
-        var col_crossed = numbers_crossed >= 5 ;
-        var left_diag_crossed = numbers_crossed >= 5 && (row == col);
-        var right_diag_crossed = numbers_crossed >= 5 && ((row+col)==4);
+function checkBingo(row,col) { 
+    
+    var row_str = crossed_cells[row];
+    crossed_cells[row] = row_str.substr(0,col)+'1'+row_str.substr(col+1);
+      
+    //variable to check if a row is fully checked
+    var row_crossed = crossed_cells[row] == '11111';
+    
+    //variable to check if a column is fully checked. 
+    //Checking will start only after at least 5 elements have been checked.
+    var col_crossed = numbers_crossed >= 5 ;
+    
+    //variable to check if the diagonal starting from top-left corner and ending at bottom-right corner.
+    //Checking will start only after at least 5 elements have been checked.
+    var left_diag_crossed = numbers_crossed >= 5 && (row == col);
+    
+    //variable to check if the diagonal starting from top-right corner and ending at bottom-left corner.
+    //Checking will start only after at least 5 elements have been checked.
+    var right_diag_crossed = numbers_crossed >= 5 && ((row+col)==4);
 
-        for(var i=0; i<= 4; i++){
-            if(crossed_cells[i].substr(col,1) == 0)
+    for(var i=0; i<= 4; i++){
+        if(crossed_cells[i].substr(col,1) == 0)
+        {
+            col_crossed = false;
+            break;
+        }
+    }
+     
+    if(row == col)
+    {
+        for(i=0; i <= 4 ; i++){           
+            if(crossed_cells[i].substr(i,1)==0)
             {
-                col_crossed = false;
+                left_diag_crossed = false;
                 break;
             }
-        }
+        }                      
+    }
         
-        if(row == col && (row+col) != 4)
-        {
-            for(i=0; i <= 4 ; i++){           
-                if(crossed_cells[i].substr(i,1)==0)
-                {
-                    left_diag_crossed = false;
-                    break;
-                }
-            }                      
-        }
-        
-        if(row != col && (row+col) == 4)
-        {
-            for(i=0; i <= 4 ; i++){       
-                if(crossed_cells[i].substr(4-i,1) == 0) {
-                    right_diag_crossed = false;
-                    break;
-                }
-            }      
-        }
-        if((row==col) && ((row+col) == 4))
-        {
-            for(i=0; i <= 4 ; i++){       
-                if((crossed_cells[i].substr(i,1)==0)) {
-                    left_diag_crossed = false;
-                    break;
-                }
-                if((crossed_cells[i].substr(4-i,1) == 0)) {
-                    right_diag_crossed = false;
-                    break;
-                }
-            }   
-        }
-        if(numbers_crossed >= 5 && (row_crossed || col_crossed || left_diag_crossed || right_diag_crossed))
-        {
-            if(row_crossed) no_of_lines += 1;
-            if(col_crossed) no_of_lines += 1;
-            if(left_diag_crossed) no_of_lines += 1;
-            if(right_diag_crossed) no_of_lines += 1;
+    if((row+col) == 4)
+    {
+        for(i=0; i <= 4 ; i++){       
+            if(crossed_cells[i].substr(4-i,1) == 0) {
+                right_diag_crossed = false;
+                break;
+            }
+        }      
+    }
+        // if((row==col) && ((row+col) == 4))
+        // {
+        //     for(i=0; i <= 4 ; i++){       
+        //         if((crossed_cells[i].substr(i,1)==0)) {
+        //             left_diag_crossed = false;
+        //             break;
+        //         }
+        //         if((crossed_cells[i].substr(4-i,1) == 0)) {
+        //             right_diag_crossed = false;
+        //             break;
+        //         }
+        //     }   
+        // }
+    if(numbers_crossed >= 5 && (row_crossed || col_crossed || left_diag_crossed || right_diag_crossed))
+    {
+        if(row_crossed) no_of_lines += 1;
+        if(col_crossed) no_of_lines += 1;
+        if(left_diag_crossed) no_of_lines += 1;
+        if(right_diag_crossed) no_of_lines += 1;
 
-            document.getElementById("no_of_lines").innerHTML = no_of_lines;
-            displayText = no_of_lines >=5 ? bingoText.substr(0,5):bingoText.substr(0,no_of_lines);
-            document.getElementById("bingo_Text").innerHTML = displayText;
-        }
+        document.getElementById("no_of_lines").innerHTML = no_of_lines;
+        displayText = no_of_lines >=5 ? bingoText.substr(0,5):bingoText.substr(0,no_of_lines);
+        document.getElementById("bingo_Text").innerHTML = displayText;
+    }
 }
       
