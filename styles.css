@@ -1,8 +1,7 @@
 .main-container {
   height: 100%;
+  width: 100%;
   /* display: inline-block; */
- 
-  
 }
  /* #div1 {margin:auto;font-size:1.25em; float: left; width: 50%;} */
  .header{
@@ -12,9 +11,10 @@
  }
  .logo
  {
+   position: relative;
    margin-top: 10px;
    margin-bottom: 10px;
-   margin-left: 585px ;
+   margin-left: 42% ;
    height: 70%;
    width : 180px;
  }
@@ -30,23 +30,93 @@
 .grid-div {
    
 }
-.grid {
+.grid-1 {
   border-collapse:collapse;
-  border:1px solid #7f7f7f; 
+  border:1px solid #2e2e2e; 
   margin-top: 10px;
 }
-.grid-cell {
+
+.grid-1 #header_row {
+  visibility: hidden;
+}
+
+.grid-1 .grid-cell {
    border:2px solid #7f7f7f;
    width:50px;
    height:50px;
    text-align:center;
+   font-family: Arial, Helvetica, sans-serif;
 }
-.scratchCell{
-   background-color: lightblue;
+.grid-1 .scratchCell{
+  background-color: lightblue;
 }
 
-.bingo_text
-{
+.grid-2 {
+  border-collapse: collapse;
   
 }
+
+.grid-2 .grid-header-cell {
+  /* border:2px solid #141114; */
+  width:50px;
+  height:50px;
+  text-align:center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.grid-2 .grid-cell {
+  /* border:2px solid #141114; */
+  width:50px;
+  height:50px;
+  text-align:center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  color: #ff65bd;
+}
+
+
+/* @font-face {
+  font-family: Clip;
+  src: url("https://acupoftee.github.io/fonts/Clip.ttf");
+} */
+.before-flicker {
+  text-transform: uppercase;
+  font-size: 6em;
+  color: #6b1839;
+}
+body {
+  background-color: #141114;
+  /* background-image: linear-gradient(335deg, black 23px, transparent 23px),
+    linear-gradient(155deg, black 23px, transparent 23px),
+    linear-gradient(335deg, black 23px, transparent 23px),
+    linear-gradient(155deg, black 23px, transparent 23px); */
+  background-size: 58px 58px;
+  background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+
+.flicker {
+  animation: shine 2s forwards;
+}
+
+
+@keyframes shine {
+  0% {
+    color: #6b1839;
+    text-shadow: none;
+  }
+  100% {
+    color: #a32356;
+    text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
+      -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
+      0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+  }
+}
+
+.grid-2 .scratchCell{
+  background-image: radial-gradient(
+    ellipse 50% 35% at 50% 50%,
+    #6b1839,
+    transparent
+  );
+}
+
 

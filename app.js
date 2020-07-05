@@ -8,6 +8,11 @@
 
 var crossed_cells = [];
 /**
+ * This array will represent the actual grid displayed in UI. But it is not 2D like the grid. Any number placed
+ * in the grid at row i and col j can be found in this array at position (5*i+j).
+ */
+var actual_grid = [];
+/**
  * No of lines made so far.
  */
 var no_of_lines = 0;
@@ -35,9 +40,25 @@ function drawTable() {
 
     // creates a <table> element
     var tbl = document.createElement("table");
-    tbl.classList.add('grid');
+    tbl.classList.add('grid-2');
+    
+    // creating Header for design-2
+    var header_row = document.createElement("tr");
+    header_row.setAttribute("id","header_row")
+    for(var i = 0; i < 5; i++)
+    {
+        var header_cell = document.createElement("td");
+        header_cell.classList.add("grid-header-cell");
+        header_cell.classList.add("before-flicker");
+        var letter = bingoText.substr(i,1);
+        var text = document.createTextNode(letter);
+        header_cell.appendChild(text);
+        header_row.appendChild(header_cell);
+    }
+    tbl.appendChild(header_row);
+
     // creating rows
-    var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,25];
+    var selection_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,25];
     for (var r = totalRows; r > 0; r--) {
       var row = document.createElement("tr");
 
@@ -46,7 +67,9 @@ function drawTable() {
         var cell = document.createElement("td");
         cell.setAttribute('id', (5-r)+'_'+(5-c));
         cell.classList.add("grid-cell");
-        var cellText = document.createTextNode(a.splice(Math.floor(Math.random() * ((r*4) + c - 4)), 1)[0]);
+        var random_number = selection_array.splice(Math.floor(Math.random() * ((r*4) + c - 4)), 1)[0];
+        
+        var cellText = document.createTextNode(random_number);
         cell.appendChild(cellText);
         cell.addEventListener("click", function(){
             var arr = event.target.getAttribute('id').split('_');
@@ -61,6 +84,8 @@ function drawTable() {
           
         });
         row.appendChild(cell);
+
+        actual_grid.push(random_number);
       }
       tbl.appendChild(row); // add the row to the end of the table body
     }
@@ -141,7 +166,15 @@ function checkBingo(row,col) {
 
        // document.getElementById("no_of_lines").innerHTML = no_of_lines;
         displayText = no_of_lines >=5 ? bingoText.substr(0,5):bingoText.substr(0,no_of_lines);
-        document.getElementById("bingo_Text").innerHTML = displayText;
+       // document.getElementById("bingo_Text").innerHTML = displayText;
+        
+        var header_row = document.getElementById("header_row");
+        for(var i = 0; i < no_of_lines; i++){
+            if(i <= 5 && !header_row.cells[i].classList.contains("flicker"))
+            {
+                header_row.cells[i].classList.add("flicker");
+            }
+        }
     }
 }
       
