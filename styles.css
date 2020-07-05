@@ -1,23 +1,52 @@
-
- /* #div1 {margin:auto;font-size:1.25em; float: left; width: 50%;} */
- table {border-collapse:collapse;border:1px solid #7f7f7f; }
- td {border:1px solid #7f7f7f;width:50px;height:50px;text-align:center;}
- .scratchCell{
-     background-color: coral;
- }
- .float_right
- {
-     float: right;
- }
- .grid-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.main-container {
+  height: 100%;
+  /* display: inline-block; */
+ 
   
-  .grid{
-    /* background-color: #B10DC9; */
-    width: 300px;
-    height: 300px;
-  }
+}
+ /* #div1 {margin:auto;font-size:1.25em; float: left; width: 50%;} */
+ .header{
+   width: 100%;
+   height: 60px;
+   background-color: lightblue;
+ }
+ .logo
+ {
+   margin-top: 10px;
+   margin-bottom: 10px;
+   margin-left: 585px ;
+   height: 70%;
+   width : 180px;
+ }
+   
+ .grid-container{
+ 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  padding: 10px;
+
+}
+.grid-div {
+   
+}
+.grid {
+  border-collapse:collapse;
+  border:1px solid #7f7f7f; 
+  margin-top: 10px;
+}
+.grid-cell {
+   border:2px solid #7f7f7f;
+   width:50px;
+   height:50px;
+   text-align:center;
+}
+.scratchCell{
+   background-color: lightblue;
+}
+
+.bingo_text
+{
+  
+}
+
