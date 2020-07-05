@@ -1,0 +1,12 @@
+1. Bingo Game
+2. Ability to change no. of rows and columns
+3. Show other user's inputs
+4. Tournaments/Multiple rounds
+5. Find out a way to store game results
+6. Chat section in live game
+7. Multiplayer (limit yet to be decided)
+8. Man vs Computer
+9. Design UI
+10.
+
+	
